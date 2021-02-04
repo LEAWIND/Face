@@ -63,8 +63,8 @@ def calc_dist_and_show():
 		file.close()
 		dist_same.append(float(torch.sqrt(torch.sum((f1-f0)**2))))
 
-	comb = set()
 	dist_diff = []
+	comb = set()
 	while len(comb) < 500:
 		i = random.randint(0, 498)
 		j = random.randint(i+1, 499)
@@ -88,11 +88,9 @@ def calc_dist_and_show():
 
 		dist_diff.append(float(torch.sqrt(torch.sum((f1-f0)**2))))
 
+	
 
 
-
-	print('把相同、不同人的欧式距离都画出来...')
-	print('如图所示，如果直接靠欧氏距离来判断，准确率显然是不够的(90%以下)')
 	plt.xlim(min(dist_same), max(dist_diff))
 	plt.ylim(min(dist_same), max(dist_diff))
 	plt.scatter(dist_same, dist_same,s=10, c='b', alpha=0.2, marker='.')
