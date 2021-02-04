@@ -32,23 +32,24 @@ class getfacefeature(object):
 		return feature[0] # tensor
 p = getfacefeature()
 print('初始化完成')
-
+# # 
+# imgFolder = '../data/image'
+# f = ftFolder
+# imglist = os.listdir(imgFolder)
+# for fn in imglist:
+# 	p0 = '/'.join([imgFolder, fn])
+# 	p1 = '/'.join([f, fn[:-4]+'.txt'])
+# 	img = Image.open(p0)
+# 	fea = ','.join(map(str, map(float, p.getfeature(img))))
+# 	img.close()
+# 	ftf = open(p1, mode='w')
+# 	ftf.write(fea)
+# 	ftf.close()
 def calc_dist_and_show():
 	ftFolder = '../data/imgFeature'
 	ftList = os.listdir(ftFolder)
 
-	# imgFolder = '../data/image'
-	# f = ftFolder
-	# imglist = os.listdir(imgFolder)
-	# for fn in imglist:
-	# 	p0 = '/'.join([imgFolder, fn])
-	# 	p1 = '/'.join([f, fn[:-4]+'.txt'])
-	# 	img = Image.open(p0)
-	# 	fea = ','.join(map(str, map(float, p.getfeature(img))))
-	# 	img.close()
-	# 	ftf = open(p1, mode='w')
-	# 	ftf.write(fea)
-	# 	ftf.close()
+	
 
 	dist_same = []
 	# 同一人 500 对
@@ -92,8 +93,12 @@ def calc_dist_and_show():
 
 	plt.xlim(min(dist_same), max(dist_diff))
 	plt.ylim(min(dist_same), max(dist_diff))
-	plt.scatter(dist_same, dist_same,s=10, c='b', alpha=0.2, marker='.')
-	plt.scatter(dist_diff, list(map(lambda x: max(dist_diff)-x, dist_diff)),s=10, c='r', alpha=0.2, marker='.')
+
+	plt.scatter(dist_same, dist_same, s=30, c='b', alpha=0.2, marker='o')
+	plt.scatter(dist_diff, dist_diff, s=30, c='r', alpha=0.2, marker='o')
+
+	plt.scatter(dist_same, dist_diff, s=30, c='b', alpha=0.3, marker='^')
+	plt.scatter(dist_diff, dist_same, s=30, c='r', alpha=0.3, marker='v')
 	plt.show()
 
 

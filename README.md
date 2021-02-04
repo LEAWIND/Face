@@ -7,21 +7,23 @@
 #附加题 用获取的feature 和 label来做分类（参考上一次的逻辑回归）
 ```
 
-#### 人脸验证 verification
+#### 23
 
-大概就是判断两张照片是不是来自同一个人。获取特征后用欧氏距离判断。阈值可以直接靠肉眼观察图像得出。
+##### [`./verification/showGraph.py`](./verification/showGraph.py) 显示欧氏距离图像
 
-[./verification/showGraph.py] 显示图像
+我把每张图片的特征算出来后直接保存到 .txt 文件里了。
+
+虽然体积大了点，但是可以节省很多时间
 
 #### 人脸识别 recognition
 
-##### [./recognition/register.py] 注册人脸。
+##### [`./recognition/register.py`](./recognition/register.py) 注册人脸。
 
 如果电脑有摄像头，可以直接运行该文件进行注册。
 
 如果没有，也可以直接把图像文件放在文件夹`/recognition/account`里然后运行`register.py`。
 
-##### [./recognition/recognize.py] 通过摄像头识别人脸
+##### [`./recognition/recognize.py`](./recognition/recognize.py) 通过摄像头识别人脸
 
 通过摄像头实时获取图像，提取特征，与文件夹`account`里的`*.txt`中的特征相比对，找出最相似的人
 
