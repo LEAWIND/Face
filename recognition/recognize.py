@@ -17,7 +17,6 @@ class getfacefeature(object):
 	def __init__(self):
 		model_path = os.path.join('../Arcface_100.pth')  # Parameters path
 		self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Computing devices
-		# self.device = torch.device('cpu')	# 奈何 MX350 显存只有 2G, 常常 CUDA out of memory	# TODO
 		self.arcface = KitModel(model_path).to(self.device)  # model
 		self.arcface.eval()
 		self.transforms = transforms.Compose([

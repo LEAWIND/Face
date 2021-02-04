@@ -44,7 +44,7 @@ def calc_dist_and_show():
 	# 	p0 = '/'.join([imgFolder, fn])
 	# 	p1 = '/'.join([f, fn[:-4]+'.txt'])
 	# 	img = Image.open(p0)
-	# 	fea = ','.join(map(lambda x: x[:8], map(str, map(float, p.getfeature(img)))))
+	# 	fea = ','.join(map(str, map(float, p.getfeature(img))))
 	# 	img.close()
 	# 	ftf = open(p1, mode='w')
 	# 	ftf.write(fea)
@@ -70,12 +70,13 @@ def calc_dist_and_show():
 		j = random.randint(i+1, 499)
 		k = '_'.join([str(i), str(j)])
 		comb.add(k)
+
 	for k in comb:
 		i, j = map(int, k.split('_'))
 		# print(i, j)
 		d0 = i*2+random.randint(0,1)
 		d1 = j*2+random.randint(0,1)
-		print(d0, d1)
+		# print(d0, d1)
 		f0 = '/'.join([ftFolder, ftList[d0]])
 		file = open(f0, mode='r')
 		f0 = torch.tensor(list(map(float, file.read().split(',')))).to(p.device)
@@ -87,8 +88,6 @@ def calc_dist_and_show():
 		file.close()
 
 		dist_diff.append(float(torch.sqrt(torch.sum((f1-f0)**2))))
-
-	
 
 
 	plt.xlim(min(dist_same), max(dist_diff))
