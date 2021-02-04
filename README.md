@@ -7,34 +7,30 @@
 #附加题 用获取的feature 和 label来做分类（参考上一次的逻辑回归）
 ```
 
-
-
-* **人脸验证 verification**
+#### 人脸验证 verification
 
 大概就是判断两张照片是不是来自同一个人。获取特征后用欧氏距离判断。阈值可以直接靠肉眼观察图像得出。
 
+[./verification/showGraph.py] 显示图像
 
+#### 人脸识别 recognition
 
-.
-
-* **人脸识别 recognition**
-
-`./recognition/register.py` 注册人脸。
+##### [./recognition/register.py] 注册人脸。
 
 如果电脑有摄像头，可以直接运行该文件进行注册。
 
 如果没有，也可以直接把图像文件放在文件夹`/recognition/account`里然后运行`register.py`。
 
-`./recognition/recognize.py` 通过摄像头识别人脸
+##### [./recognition/recognize.py] 通过摄像头识别人脸
 
-程序会实时通过摄像头获取图像，提取特征，与文件夹`account`里的`*.txt`中的特征相比对，找出最相似的人
+通过摄像头实时获取图像，提取特征，与文件夹`account`里的`*.txt`中的特征相比对，找出最相似的人
 
 .
 
 
 
 ```js
-'我有一次遇到了这样的报错：'
+'有时用 CPU 运行会有这样的报错：'
 `
 Traceback (most recent call last):
   File "d:/workspace/Projects_AI/Face/recognition/recognize.py", line 50, in <module>
@@ -54,7 +50,7 @@ Traceback (most recent call last):
 RuntimeError: [enforce fail at ..\c10\core\CPUAllocator.cpp:73] data. DefaultCPUAllocator: not enough memory: you tried to allocate 9437184 bytes. Buy new RAM!
 [ WARN:0] global C:\Users\appveyor\AppData\Local\Temp\1\pip-req-build-kh7iq4w7\opencv\modules\videoio\src\cap_msmf.cpp (434) \`anonymous-namespace'::SourceReaderCB::~SourceReaderCB terminating async callback
 `
-'它竟然提醒我买新内存条 ! ? ?'
+'它竟然叫我买新内存条 ! ? ?'
 
 ```
 

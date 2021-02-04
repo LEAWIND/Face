@@ -1,5 +1,8 @@
 print("初始化中...")
 import os, re, hashlib
+pth = os.getcwd().split('\\')
+if pth[-1].lower() == 'face':
+	os.chdir('recognition')
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,9 +12,6 @@ import torch.nn.functional as F
 from network.resnet100 import KitModel
 import cv2
 accFolder = 'accounts'	# 储存账号的文件夹
-pth = os.getcwd().split('\\')
-if pth[-1].lower() == 'face':
-	os.chdir('recognition')
 	
 class getfacefeature(object):
 	def __init__(self):
@@ -32,6 +32,7 @@ class getfacefeature(object):
 
 		return feature[0] # tensor
 p = getfacefeature()
+print('初始化完成')
 
 # 将文件夹中的jpg文件转换成特征值文件
 fs = os.listdir(accFolder)
