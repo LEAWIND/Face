@@ -20,8 +20,8 @@ for f in ftList:
 	f = torch.cat([f, torch.tensor([1])])
 	fts.append(f)
 fts = fts[::2]	# 对每个人取 1 张图片就够了
-train_m = fts[   :200][:-1]	# 训练用的男性样本
-train_f = fts[250:450][:-1]	# 训练用的女性样本
+train_m = fts[   :200][:20]	# 训练用的男性样本
+train_f = fts[250:450][:20]	# 训练用的女性样本
 test_m = fts[200:250]	# 测试用的男性样本
 test_f = fts[450:]	# 测试用的女性样本
 
@@ -65,7 +65,6 @@ def lossOf(prm):	# 损失函数
 # 	n -= 1
 
 
-
 def move(step=0.00001):	# 每走完一步都把结果存在文件中
 	file = open('target.txt', mode='r')
 	prm = file.read().strip().split(' ')
@@ -73,7 +72,6 @@ def move(step=0.00001):	# 每走完一步都把结果存在文件中
 	file.close()
 
 	l0 = lossOf(prm)
-	print('loss =', l0)
 	d = prm.clone()
 	for i in range(len(prm)):
 		q = prm.clone()
@@ -88,10 +86,11 @@ def move(step=0.00001):	# 每走完一步都把结果存在文件中
 	file = open('target.txt', mode='w')
 	file.write(prm)
 	file.close()
-	return 
+	print('loss =', l0)
+	return
 
 if __name__ == '__main__':
-	n = 2
+	n = 10
 	while n>0:
-		move(0.006)
+		move(0.009)
 		n -= 1

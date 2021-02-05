@@ -26,6 +26,7 @@ def isMale(ft:'加了常数项的图像特征', prm:'训练好的513个参数'):
 	return ft
 
 
+
 if __name__ == '__main__':
 	file = open('target.txt', mode='r')
 	prm = file.read().strip().split(' ')
