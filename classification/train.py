@@ -52,7 +52,16 @@ def move(step=0.00001):	# 每走完一步都把结果存在文件中
 	prm = file.read().strip().split(' ')
 	prm = torch.tensor(list(map(float, prm))).to('cuda')
 	file.close()
-	l0 = lossOf(prm)
+
+	# l0 = lossOf(prm)
+	
+
+	prm = map(float, prm)
+	prm = map(str, prm)
+	prm = ' '.join(prm)
+	file = open('target.txt', mode='w')
+	file.write(prm)
+	file.close()
 	return 
 
 if __name__ == '__main__':
