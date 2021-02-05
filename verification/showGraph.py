@@ -85,12 +85,8 @@ def calc_dist_and_show():
 	print('一个比较合适的阈值:', ts)
 	print('它的准确率:', f"Accuracy of({ts}) = 1 - {lossOf(ts)} / 1000 = {1-lossOf(ts)/1000}")
 
-	plt.xlim(min(dist_same), max(dist_diff))
-	plt.ylim(min(dist_same), max(dist_diff))
-
 	plt.scatter(dist_same, dist_same, s=30, c='b', alpha=0.2, marker='o')
 	plt.scatter(dist_diff, dist_diff, s=30, c='r', alpha=0.2, marker='o')
-
 	plt.scatter(dist_same, dist_diff, s=30, c='b', alpha=0.3, marker='^')
 	plt.scatter(dist_diff, dist_same, s=30, c='r', alpha=0.3, marker='v')
 	plt.show()

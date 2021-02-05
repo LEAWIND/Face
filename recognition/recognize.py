@@ -23,14 +23,11 @@ class getfacefeature(object):
 			transforms.ToTensor(),
 			transforms.Normalize((0.5, 0.5, 0.5), (128 / 255., 128 / 255., 128 / 255.))
 		])
-
 	def getfeature(self, img:"img from PIL.Image.open"):
 		img = self.transforms(img).unsqueeze(0)
 		img = torch.cat([img, img], dim=0).to(self.device)
-
 		feature = self.arcface(F.interpolate(img, (112, 112), mode='bilinear', align_corners=True))
-
-		return feature[0] # tensor
+		return feature[0]
 p = getfacefeature()
 print('初始化完成')
 
@@ -59,7 +56,7 @@ while 1:
 		file.close()
 		ft1 = torch.tensor(list(map(float, ft1))).to(p.device)
 		dist = torch.sqrt(torch.sum((ft1-ft)**2))
-		if(dist>1.1):
+		if(dist > 0.95):
 			continue
 		else:
 			mb.append([accName, dist])
