@@ -1,10 +1,9 @@
-import os, re
+import os
 pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
 	os.chdir('recognition')
 import torch
 import matplotlib.pyplot as plt
-import numpy as np
 import PIL.Image as Image
 import random
 accFolder = 'accounts'	# 储存账号的文件夹
