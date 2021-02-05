@@ -1,4 +1,4 @@
-import os, re, hashlib
+import os, re
 pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
 	os.chdir('recognition')
@@ -6,10 +6,6 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 import PIL.Image as Image
-import torchvision.transforms as transforms
-import torch.nn.functional as F
-import cv2
-
 import random
 accFolder = 'accounts'	# 储存账号的文件夹
 

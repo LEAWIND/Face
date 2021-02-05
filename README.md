@@ -7,7 +7,7 @@
 #附加题 用获取的feature 和 label来做分类（参考上一次的逻辑回归）
 ```
 
-#### 23
+### 0, 1
 
 [`./verification/writeFeature.py`](./verification/writeFeature.py)
 
@@ -19,7 +19,11 @@
 
 顺便用类似于梯度下降的方法计算 用来区分是否为同一人 的阈值
 
-#### 人脸识别 recognition
+### 2 性别分类 classification
+
+
+
+### 人脸识别 recognition
 
 ##### [`./recognition/register.py`](./recognition/register.py) 注册人脸。
 
