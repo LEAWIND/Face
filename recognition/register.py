@@ -1,4 +1,4 @@
-print("初始化中...")
+print("请稍等...")
 import os, re, hashlib
 pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
@@ -27,13 +27,9 @@ class getfacefeature(object):
 	def getfeature(self, img:"img from PIL.Image.open"):
 		img = self.transforms(img).unsqueeze(0)
 		img = torch.cat([img, img], dim=0).to(self.device)
-
 		feature = self.arcface(F.interpolate(img, (112, 112), mode='bilinear', align_corners=True))
-
 		return feature[0] # tensor
 p = getfacefeature()
-print('初始化完成')
-
 # 将文件夹中的jpg文件转换成特征值文件
 fs = os.listdir(accFolder)
 for f in fs:
@@ -49,7 +45,6 @@ for f in fs:
 		file = open(f'{accFolder}/{f[:-4]}.txt', mode='w')
 		file.write(fea)
 		file.close()
-print('初始化完成')
 
 ret = False
 while not ret:

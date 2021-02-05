@@ -11,7 +11,7 @@
 
 ##### [`./verification/showGraph.py`](./verification/showGraph.py) 显示欧氏距离图像
 
-我把每张图片的特征算出来后直接保存到 .txt 文件里了。
+我把每张图片的特征算出来后直接保存到一些 .txt 文件里了 (相关代码在`writeFeature.py`文件里)。
 
 虽然体积大了点，但是可以节省很多时间
 
