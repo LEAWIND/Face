@@ -20,15 +20,13 @@ def lossOf(prm):	# 损失函数
 	ls = 0
 	for s in train_m:
 		tp = torch.sum(prm*s)
-		tp = 1 / (1 + 2.718281828459045 ** (-tp))
-		tp = (1-tp) ** 0.5
+		tp = 1 - 1 / (1 + 2.718281828459045 ** (-tp))
 		ls += tp
 	for s in train_f:
 		tp = torch.sum(prm*s)
 		tp = 1 / (1 + 2.718281828459045 ** (-tp))
-		tp = (tp) ** 0.5
 		ls += tp
-	return ls/len(train_m)
+	return ls / len(train_m)
 
 
 def move(step=0.0001):	# 每走完一步都把结果存在文件中

@@ -18,13 +18,6 @@ public class Train {
 		}
 		return res;
 	}
-	public static double[] AsubA (double[] a0, double[] a1) {
-		double[] res = new double[a0.length];
-		for (int i=0;i<a0.length;i++) {
-			res[i] = a0[i] - a1[i];
-		}
-		return res;
-	}
 	public static double sumA (double[] a0) {
 		double res = 0.0d;
 		for (int i=0;i<a0.length;i++){
@@ -52,6 +45,30 @@ public class Train {
 	}
 	public static void move (double step) {
 		// read
+		// double[] prm = readPrm();
+
+		// calc
+
+		double loss_now = lossOf(prm);
+		double[] d = new double[prm.length];	// 求导
+		for (int i=0;i<prm.length;i++) {
+			double[] q = prm.clone();
+			q[i] += step;
+			d[i] = (lossOf(q) - loss_now) / step;
+		}
+		
+		for (int i=0;i<prm.length;i++) {
+			prm[i] = prm[i] - step*d[i];
+		}
+
+		// savePrm(prm);
+
+		System.out.print("loss = ");
+		System.out.print(loss_now);
+		System.out.println();
+		return;
+	}
+	public static double[] readPrm () {
 		String ogPrmTxt = "";
 		try {
 			FileInputStream fis = new FileInputStream(new File("target.txt"));
@@ -64,39 +81,26 @@ public class Train {
 		for (int i=0;i<prmTxts.length;i++) {
 			prm[i] = Double.parseDouble(prmTxts[i]);
 		}
-		// calc
-		double loss_now = lossOf(prm);
-		double[] d = new double[prm.length];	// 求导
+		return prm;
+	}
+	public static void savePrm (double[] prm) {
+		String ogPrmTxt = "";
 		for (int i=0;i<prm.length;i++) {
-			double[] q = prm.clone();
-			q[i] += step;
-			d[i] = (lossOf(q) - loss_now) / step;
-		}
-		
-		ogPrmTxt = "";
-		for (int i=0;i<prm.length;i++) {
-			prm[i] = prm[i] - step*d[i];
 			ogPrmTxt += prm[i] + " ";
 		}
 		ogPrmTxt = ogPrmTxt.trim();
-		// save
 		try {
 			BufferedWriter prmW = new BufferedWriter(new FileWriter(new File("target.txt")));
 			prmW.write(ogPrmTxt);
 			prmW.flush();
 			prmW.close();
 		} catch (Exception e) {}
-
-
-		System.out.print("loss = ");
-		System.out.print(loss_now);
-		System.out.println();
-		return;
 	}
 	public static double[][] train_m;
 	public static double[][] train_f;
 	public static double[][] test_m;
 	public static double[][] test_f;
+	public static double[] prm;
 	public static void main (String[] args) {
 		String ftFolderName = "../data/imgFeature";
 		File ftFolder = new File(ftFolderName);	// 特征文件夹 File 对象
@@ -126,10 +130,16 @@ public class Train {
 		test_f = Arrays.copyOfRange(fts, 470, 500);
 		// System.out.println();
 
-		int n = 50;
+
+		prm = readPrm();
+		int n = 50000;
 		while (n-- > 0) {
-			move(0.02);
-			System.out.println(n);
+			move(0.01);
+			if (n%10 == 0){
+				System.out.println(n);
+				savePrm(prm);
+			}
 		}
+		savePrm(prm);
 	}
 }

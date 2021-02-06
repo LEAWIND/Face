@@ -1,25 +1,51 @@
 <h1 style="white-space:pre">rén  gōng  zhì  zhàng<br/>人      工      智      能</h1>
 
 ```python
-""" 先看看作业的内容 """
+""" 先看看作业是啥 """
 #用feature tensor来计算欧式距离(可以用tensor，也可以转numpy)
 #画1000个不同人特征的欧式距离的点和1000个相同人图片的特征的欧式距离
 #附加题 用获取的feature 和 label来做分类（参考上一次的逻辑回归）
 ```
 
-### 0, 1
+## 写了乱七八糟的好多东西，在这理一理:
 
-[`./verification/writeFeature.py`](./verification/writeFeature.py)
+### [0, 1]
+
+##### [`./verification/writeFeature.py`](./verification/writeFeature.py) 节省时间
 
 把每张图片的特征算出来后直接保存到一些 .txt 文件里。
 
-虽然体积大了点，但是可以节省很多时间。
+虽然体积有点大，但是可以加快速度。
 
 ##### [`./verification/showGraph.py`](./verification/showGraph.py) 显示欧氏距离图像
 
-顺便用类似于梯度下降的方法计算 用来区分是否为同一人 的阈值
+就是用 matplotlib 把图像画出来嘛
 
-### 2 性别分类 classification
+顺便用类似于梯度下降的方法计算 "用来区分是否为同一人" 的阈值，如果欧氏距离大于这个阈值就认为不是同一人
+
+### [2] 性别分类 classification
+
+先说一下判断性别的原理：
+
+先获取图像特征(长度为 512 的向量)，然后在特征后边加一个 1， 向量长度变成 513，记为 **a**
+
+文件 [`target.txt`](classification/target.txt)  里有513个训练好的参数，这些参数组成一个向量，记为 **b**
+
+计算 sigmoid(sum(**b** 点乘 **a**) ) 的值
+
+如果大于 0.5，判断为男性
+
+如果小于 0.5，判断为女性
+
+##### [`./classification/train.py`](./classification/train.py) 		训练(Python版)
+
+##### [`./classification/train.java`](classification/train.java) 	训练(Java版)
+
+python 实在是太慢了，算到虎年都算不完👴
+
+所以我把 train.py 移植到了 [train.java](classification/train.java), 点击 [这个bat脚本](classification/compile and run.bat) 编译并运行。每次运行训练的步数是写在train.java源码里的
+
+
 
 
 
@@ -40,28 +66,15 @@
 
 
 ```js
-'有时用 CPU 运行会有这样的报错：'
-`
+'有时用 CPU 运行会有这样的报错：';`
 Traceback (most recent call last):
-  File "d:/workspace/Projects_AI/Face/recognition/recognize.py", line 50, in <module>
-    ft = p.getfeature(img)
-  File "d:/workspace/Projects_AI/Face/recognition/recognize.py", line 31, in getfeature
-    feature = self.arcface(F.interpolate(img, (112, 112), mode='bilinear', align_corners=True))
-  File "D:\softs\Python\3.8.5\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "d:\workspace\Projects_AI\Face\recognition\network\resnet100.py", line 814, in forward
-    stage4_unit2_conv2 = self.stage4_unit2_conv2(stage4_unit2_conv2_pad)
-  File "D:\softs\Python\3.8.5\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "D:\softs\Python\3.8.5\lib\site-packages\torch\nn\modules\conv.py", line 423, in forward
-    return self._conv_forward(input, self.weight)
-  File "D:\softs\Python\3.8.5\lib\site-packages\torch\nn\modules\conv.py", line 419, in _conv_forward
-    return F.conv2d(input, weight, self.bias, self.stride,
+...
 RuntimeError: [enforce fail at ..\c10\core\CPUAllocator.cpp:73] data. DefaultCPUAllocator: not enough memory: you tried to allocate 9437184 bytes. Buy new RAM!
-[ WARN:0] global C:\Users\appveyor\AppData\Local\Temp\1\pip-req-build-kh7iq4w7\opencv\modules\videoio\src\cap_msmf.cpp (434) \`anonymous-namespace'::SourceReaderCB::~SourceReaderCB terminating async callback
+...
 `
 '它竟然叫我买新内存条 ! ? ?'
 
 ```
+
 
 
