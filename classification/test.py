@@ -20,18 +20,21 @@ for f in ftList:
 	f = torch.cat([f, torch.tensor([1])])
 	fts.append(f)
 fts = fts[::2]	# 对每个人取 1 张图片就够了
-train_m = fts[   :200][:20]	# 训练用的男性样本
-train_f = fts[250:450][:20]	# 训练用的女性样本
+train_m = fts[   :200]	# 训练用的男性样本
+train_f = fts[250:450]	# 训练用的女性样本
 test_m = fts[200:250]	# 测试用的男性样本
 test_f = fts[450:]	# 测试用的女性样本
 
 def calcAccuracy(prm):
 	er = 0
 	co = 0
+	avg_m = 0
+	avg_f = 0
 	for s in test_m:
 		tp = torch.sum(prm*s)
 		tp = 1 / (1 + 2.718281828459045 ** (-tp))
 		# print('tp =', tp)
+		avg_m += tp
 		if tp > 0.5:
 			co += 1
 		else:
@@ -39,11 +42,13 @@ def calcAccuracy(prm):
 	for s in test_f:
 		tp = torch.sum(prm*s)
 		tp = 1 / (1 + 2.718281828459045 ** (-tp))
+		avg_f += tp
 		# print('tp =', tp)
 		if tp < 0.5:
 			co += 1
 		else:
 			er += 1
+	print(f"准确率:\t{co/(co+er)}\n正确数:\t{co}\n错误数:\t{er}\n男性均值:{avg_m/len(prm)}\n女性均值:{avg_f/len(prm)}")
 	return co / (co + er), co, er
 
 
@@ -52,4 +57,4 @@ if __name__ == '__main__':
 	prm = file.read().strip().split(' ')
 	prm = torch.tensor(list(map(float, prm)))
 	file.close()
-	print(calcAccuracy(prm))
+	calcAccuracy(prm)

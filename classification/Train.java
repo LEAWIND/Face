@@ -38,14 +38,14 @@ public class Train {
 		double ls = 0;
 		for (double[] s : train_m) {
 			double tp = sumA(AmulA(prm, s));
-			tp = 1.0d / (1.0d + Math.exp(- tp));
-			tp = Math.sqrt(1-tp);
+			tp = 1 - 1.0d / (1.0d + Math.exp(- tp));
+			// tp = Math.tan(tp);
 			ls += tp;
 		}
 		for (double[] s : train_f) {
 			double tp = sumA(AmulA(prm, s));
 			tp = 1.0d / (1.0d + Math.exp(- tp));
-			tp = Math.sqrt(tp);
+			// tp = Math.tan(tp);
 			ls += tp;
 		}
 		return ls / train_m.length;
@@ -120,15 +120,15 @@ public class Train {
 			fts[j] = f;
 		}
 		// fts[i] 代表第 i+1 张图片的特征数组 [513]
-		train_m = Arrays.copyOfRange(fts, 0  , 200);
-		train_f = Arrays.copyOfRange(fts, 250, 450);
-		test_m = Arrays.copyOfRange(fts, 200, 250);
-		test_f = Arrays.copyOfRange(fts, 450, 500);
+		train_m = Arrays.copyOfRange(fts, 0  , 220);
+		train_f = Arrays.copyOfRange(fts, 250, 470);
+		test_m = Arrays.copyOfRange(fts, 220, 250);
+		test_f = Arrays.copyOfRange(fts, 470, 500);
 		// System.out.println();
 
-		int n = 500;
+		int n = 50;
 		while (n-- > 0) {
-			move(0.01);
+			move(0.02);
 			System.out.println(n);
 		}
 	}
