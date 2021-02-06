@@ -27,20 +27,19 @@ public class Train {
 	}
 
 	public static double lossOf (double[] prm) {	// 损失函数
-		/* 共 500 人，取前 200 个男性和前 200 个女性用来训练，剩下 100 个人用来测试 */
 		double ls = 0;
 		for (double[] s : train_m) {
 			double tp = sumA(AmulA(prm, s));
 			tp = 1 - 1.0d / (1.0d + Math.exp(- tp));
-			// tp = Math.tan(tp);
+			// tp = Math.tan(tp*3.1);
 			ls += tp;
 		}
 		for (double[] s : train_f) {
 			double tp = sumA(AmulA(prm, s));
 			tp = 1.0d / (1.0d + Math.exp(- tp));
-			// tp = Math.tan(tp);
+			// tp = Math.tan(tp*3.1);
 			ls += tp;
-		}
+		}	
 		return ls / train_m.length;
 	}
 	public static void move (double step) {
@@ -124,18 +123,17 @@ public class Train {
 			fts[j] = f;
 		}
 		// fts[i] 代表第 i+1 张图片的特征数组 [513]
-		train_m = Arrays.copyOfRange(fts, 0  , 220);
-		train_f = Arrays.copyOfRange(fts, 250, 470);
+		train_m = Arrays.copyOfRange(fts, 30, 220);
+		train_f = Arrays.copyOfRange(fts, 280, 470);
 		test_m = Arrays.copyOfRange(fts, 220, 250);
 		test_f = Arrays.copyOfRange(fts, 470, 500);
 		// System.out.println();
 
-
 		prm = readPrm();
-		int n = 50000;
+		int n = 5000000;
 		while (n-- > 0) {
-			move(0.01);
-			if (n%10 == 0){
+			move(0.003);
+			if (n%20 == 0){
 				System.out.println(n);
 				savePrm(prm);
 			}

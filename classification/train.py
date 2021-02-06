@@ -14,9 +14,6 @@ def isMale(ft:'加了常数项的图像特征', prm:'训练好的513个参数'):
 	return ft
 
 def lossOf(prm):	# 损失函数
-	"""
-	共 500 人，取前 200 个男性和前 200 个女性用来训练，剩下 100 个人用来测试
-	"""
 	ls = 0
 	for s in train_m:
 		tp = torch.sum(prm*s)

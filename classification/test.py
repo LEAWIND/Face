@@ -3,9 +3,6 @@ pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
 	os.chdir('classification')
 import torch
-import matplotlib.pyplot as plt
-import numpy as np
-import PIL.Image as Image
 
 ftFolder = '../data/imgFeature'
 ftList = os.listdir(ftFolder)
@@ -20,13 +17,12 @@ for f in ftList:
 	f = torch.cat([f, torch.tensor([1])])
 	fts.append(f)
 fts = fts[::2]	# 对每个人取 1 张图片就够了
-train_m = fts[   :200]	# 训练用的男性样本
-train_f = fts[250:450]	# 训练用的女性样本
+
 test_m = fts[150:250]	# 测试用的男性样本
 test_f = fts[400:]	# 测试用的女性样本
 
-# test_m = train_m
-# test_f = train_f
+test_m = fts[:250]
+test_f = fts[250:]
 
 def calcAccuracy(prm):
 	er = 0
