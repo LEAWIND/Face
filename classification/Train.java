@@ -6,62 +6,45 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
-
-
 import java.util.Arrays;
 
 public class Train {
-	public static double[] AmulA (double[] a0, double[] a1) {
-		double[] res = new double[a0.length];
-		for (int i=0;i<a0.length;i++) {
-			res[i] = a0[i] * a1[i];
-		}
-		return res;
-	}
-	public static double sumA (double[] a0) {
-		double res = 0.0d;
-		for (int i=0;i<a0.length;i++){
-			res += a0[i];
-		}
-		return res;
-	}
-
-	public static double lossOf (double[] prm) {	// 损失函数
+	public static double lossOf (double[] prm) {
 		double ls = 0;
-		for (double[] s : train_m) {
-			double tp = sumA(AmulA(prm, s));
-			tp = 1 - 1.0d / (1.0d + Math.exp(- tp));
-			// tp = Math.tan(tp*3.1);
-			ls += tp;
+		double tp;
+		double[] s = new double[train_m[0].length];
+		for (int i=0;i<train_m.length;i++) {
+			tp = 0;
+			for (int j=0;j<prm.length;j++) {
+				tp += prm[j] * train_m[i][j];
+			}
+			ls += 1 - 1.0d / (1.0d + Math.exp(- tp));
 		}
-		for (double[] s : train_f) {
-			double tp = sumA(AmulA(prm, s));
-			tp = 1.0d / (1.0d + Math.exp(- tp));
-			// tp = Math.tan(tp*3.1);
-			ls += tp;
+		for (int i=0;i<train_f.length;i++) {
+			tp = 0;
+			for (int j=0;j<prm.length;j++) {
+				tp += prm[j] * train_f[i][j];
+			}
+			ls += 1.0d / (1.0d + Math.exp(- tp));
 		}	
 		return ls / train_m.length;
 	}
 	public static void move (double step) {
 		// read
 		// double[] prm = readPrm();
-
 		// calc
-
 		double loss_now = lossOf(prm);
-		double[] d = new double[prm.length];	// 求导
+		double[] d = new double[prm.length];
+		double[] q = new double[prm.length];
 		for (int i=0;i<prm.length;i++) {
-			double[] q = prm.clone();
+			System.arraycopy(prm, 0, q, 0, 513);
 			q[i] += step;
 			d[i] = (lossOf(q) - loss_now) / step;
 		}
-		
 		for (int i=0;i<prm.length;i++) {
 			prm[i] = prm[i] - step*d[i];
 		}
-
 		// savePrm(prm);
-
 		System.out.print("loss = ");
 		System.out.print(loss_now);
 		System.out.println();
@@ -131,13 +114,14 @@ public class Train {
 
 		prm = readPrm();
 		int n = 5000000;
+		n = 2000;
 		while (n-- > 0) {
 			move(0.003);
 			if (n%20 == 0){
 				System.out.println(n);
-				savePrm(prm);
+				// savePrm(prm);
 			}
 		}
-		savePrm(prm);
+		// savePrm(prm);
 	}
 }
