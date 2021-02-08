@@ -93,7 +93,7 @@ public class Train {
 				ogFeaTxt = feaR.readLine() + " 1";
 			} catch (Exception e) {}
 			String[] feaTxts = ogFeaTxt.split(" ");	// 分割 为 513 个子串
-			double[] f = new double[513];	// 特征数组
+			double[] f = new double[513];	// feature array
 			for (int j=0;j<feaTxts.length;j++) {
 				f[j] = Double.parseDouble(feaTxts[j]);
 			}
@@ -114,13 +114,13 @@ public class Train {
 		train_m = getfts("../data/train_m_ft");
 
 		train_m = Arrays.copyOfRange(train_m, 100, 500);
-		train_f = Arrays.copyOfRange(train_f, 0, 450);
+		train_f = Arrays.copyOfRange(train_f, 0, 400);
 
 		prm = readPrm();
 		int n = 5000000;
 		// n = 10;
 		while (n-- > 0) {
-			move(0.03);
+			move(0.02);
 			if (n%20 == 0){
 				System.out.println(n);
 				savePrm(prm);
