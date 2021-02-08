@@ -10,7 +10,8 @@ import java.util.Arrays;
 public class Train {
 	final String train_m_folder = "../data/train_m_ft";
 	final String train_f_folder = "../data/train_f_ft";
-	public static double lossOf (double[] prm) {
+
+	public static double lossOf (double[] prm) {	// 损失函数
 		double ls = 0;
 		double tp;
 		double[] s = new double[train_m[0].length];
@@ -31,13 +32,10 @@ public class Train {
 		return ls / train_m.length;
 	}
 	public static void move (double step) {
-		// read
-		// double[] prm = readPrm();
-		// calc
 		double loss_now = lossOf(prm);
 		double[] d = new double[prm.length];
 		double[] q = new double[prm.length];
-		for (int i=0;i<prm.length;i++) {
+		for (int i=0;i<prm.length;i++) {	// 对每个方向分别求导
 			System.arraycopy(prm, 0, q, 0, 513);
 			q[i] += step;
 			d[i] = (lossOf(q) - loss_now) / step;
@@ -45,7 +43,6 @@ public class Train {
 		for (int i=0;i<prm.length;i++) {
 			prm[i] = prm[i] - step*d[i];
 		}
-		// savePrm(prm);
 		System.out.print("loss = ");
 		System.out.print(loss_now);
 		System.out.println();
@@ -84,7 +81,7 @@ public class Train {
 		String[] ftList = ftFolder.list();	// 获取其中所有文件名
 		double[][] fts = new double[ftList.length][513];
 		for (int i=0;i<ftList.length;i+=1) {
-			String feaName = folderPath + "/" + ftList[i];	//TODO
+			String feaName = folderPath + "/" + ftList[i];
 			String ogFeaTxt = "";	// 用于存放读取到的文件内容
 			try {
 				FileInputStream fis = new FileInputStream(new File(feaName));
@@ -108,7 +105,6 @@ public class Train {
 
 	public static double[] prm;
 	public static void main (String[] args) {
-
 		// train_m = Arrays.copyOfRange(fts, 50, 220);
 		train_f = getfts("../data/train_f_ft");
 		train_m = getfts("../data/train_m_ft");
