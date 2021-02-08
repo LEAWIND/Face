@@ -6,6 +6,8 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 
+train_m_folder = "../data/train_m_ft"
+train_f_folder = "../data/train_f_ft"
 
 def isMale(ft:'加了常数项的图像特征', prm:'训练好的513个参数'):
 	ft = prm * ft
@@ -47,26 +49,22 @@ def move(step=0.0001):	# 每走完一步都把结果存在文件中
 	file.close()
 	print('loss =', loss_now)
 	return
-
-if __name__ == '__main__':
-		
-	ftFolder = '../data/imgFeature'
-	ftList = os.listdir(ftFolder)	# 获取文件夹中所有文件名
+def getfts(folderPath):
+	ftList = os.listdir(folderPath)
 	fts = []
 	for f in ftList:
-		fi = open(f"{ftFolder}/{f}", mode='r')
-		f = fi.read().split(',')
+		fi = open(f"{folderPath}/{f}", mode='r')
+		f = fi.read().split(' ')
 		fi.close()
 		f = list(map(float, f))
 		f = torch.tensor(f)
 		f = torch.cat([f, torch.tensor([1])])
 		fts.append(f)
-	fts = fts[::2]	# 对每个人取 1 张图片就够了
-	train_m = fts[   :200][:100]	# 训练用的男性样本
-	train_f = fts[250:450][:100]	# 训练用的女性样本
-	test_m = fts[200:250]	# 测试用的男性样本
-	test_f = fts[450:]	# 测试用的女性样本
+	return fts
 
+if __name__ == '__main__':
+	train_m = getfts(train_m_folder)	# 训练用的男性样本
+	train_f = getfts(train_f_folder)	# 训练用的女性样本
 	n = 1
 	while n>0:
 		move(0.01)

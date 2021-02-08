@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 import PIL.Image as Image
 import random
 accFolder = 'accounts'	# 储存账号的文件夹
-
+#TODO
+#TODO
+#TODO
 
 def calc_dist_and_show():
 	ftFolder = '../data/imgFeature'

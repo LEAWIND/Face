@@ -1,4 +1,3 @@
-// import java.util.ArrayList;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -9,6 +8,8 @@ import java.io.BufferedWriter;
 import java.util.Arrays;
 
 public class Train {
+	final String train_m_folder = "../data/train_m_ft";
+	final String train_f_folder = "../data/train_f_ft";
 	public static double lossOf (double[] prm) {
 		double ls = 0;
 		double tp;
@@ -78,50 +79,53 @@ public class Train {
 			prmW.close();
 		} catch (Exception e) {}
 	}
-	public static double[][] train_m;
-	public static double[][] train_f;
-	public static double[][] test_m;
-	public static double[][] test_f;
-	public static double[] prm;
-	public static void main (String[] args) {
-		String ftFolderName = "../data/imgFeature";
-		File ftFolder = new File(ftFolderName);	// 特征文件夹 File 对象
-		String[] ftList = ftFolder.list();	// 获取文件夹中所有文件名
-		double[][] fts = new double[500][513];
-		for (int i=0;i<ftList.length;i+=2) {
-			int j = i / 2;
-			String feaName = ftFolderName + "/" + ftList[i];	// 特征.txt 文件路径
-			String ogFeaTxt = "";
+	public static double[][] getfts (String folderPath) {
+		File ftFolder = new File(folderPath);	// 文件夹 File 对象
+		String[] ftList = ftFolder.list();	// 获取其中所有文件名
+		double[][] fts = new double[ftList.length][513];
+		for (int i=0;i<ftList.length;i+=1) {
+			String feaName = folderPath + "/" + ftList[i];	//TODO
+			String ogFeaTxt = "";	// 用于存放读取到的文件内容
 			try {
 				FileInputStream fis = new FileInputStream(new File(feaName));
 				InputStreamReader isr = new InputStreamReader(fis);
 				BufferedReader feaR = new BufferedReader(isr);
-				ogFeaTxt = feaR.readLine() + ",1";
+				ogFeaTxt = feaR.readLine() + " 1";
 			} catch (Exception e) {}
-			String[] feaTxts = ogFeaTxt.split(",");
+			String[] feaTxts = ogFeaTxt.split(" ");	// 分割 为 513 个子串
 			double[] f = new double[513];	// 特征数组
-			for (int k=0;k<feaTxts.length;k++) {
-				f[k] = Double.parseDouble(feaTxts[k]);
+			for (int j=0;j<feaTxts.length;j++) {
+				f[j] = Double.parseDouble(feaTxts[j]);
 			}
-			fts[j] = f;
+			fts[i] = f;
 		}
-		// fts[i] 代表第 i+1 张图片的特征数组 [513]
-		train_m = Arrays.copyOfRange(fts, 30, 220);
-		train_f = Arrays.copyOfRange(fts, 280, 470);
-		test_m = Arrays.copyOfRange(fts, 220, 250);
-		test_f = Arrays.copyOfRange(fts, 470, 500);
-		// System.out.println();
+		return fts;
+	};
+	public static double[][] train_m;
+	public static double[][] train_f;
+	public static double[][] test_m;
+	public static double[][] test_f;
+
+	public static double[] prm;
+	public static void main (String[] args) {
+
+		// train_m = Arrays.copyOfRange(fts, 50, 220);
+		train_f = getfts("../data/train_f_ft");
+		train_m = getfts("../data/train_m_ft");
+
+		train_m = Arrays.copyOfRange(train_m, 100, 500);
+		train_f = Arrays.copyOfRange(train_f, 0, 450);
 
 		prm = readPrm();
 		int n = 5000000;
-		n = 2000;
+		// n = 10;
 		while (n-- > 0) {
-			move(0.003);
+			move(0.03);
 			if (n%20 == 0){
 				System.out.println(n);
-				// savePrm(prm);
+				savePrm(prm);
 			}
 		}
-		// savePrm(prm);
+		savePrm(prm);
 	}
 }

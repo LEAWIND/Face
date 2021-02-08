@@ -1,4 +1,4 @@
-print("初始化中...")
+print("稍等...")
 import os, re, hashlib
 pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
@@ -29,7 +29,6 @@ class getfacefeature(object):
 		feature = self.arcface(F.interpolate(img, (112, 112), mode='bilinear', align_corners=True))
 		return feature[0]
 p = getfacefeature()
-print('初始化完成')
 
 ret = False
 while not ret:
@@ -56,7 +55,7 @@ while 1:
 		file.close()
 		ft1 = torch.tensor(list(map(float, ft1))).to(p.device)
 		dist = torch.sqrt(torch.sum((ft1-ft)**2))
-		if(dist > 0.95):
+		if(dist > 1.00):
 			continue
 		else:
 			mb.append([accName, dist])

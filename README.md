@@ -9,13 +9,13 @@
 
 ## 写了乱七八糟的好多东西，在这理一理每个文件的作用:
 
-### 作业[0, 1]
-
-* ##### [`./verification/writeFeature.py`](./verification/writeFeature.py) 节省时间
+##### [`./writeFeature.py`](./verification/writeFeature.py) 节省时间
 
 把每张图片的特征算出来后直接保存到一些 .txt 文件里。
 
 虽然体积有点大，但是可以加快速度。
+
+### 作业[0, 1]
 
 * ##### [`./verification/showGraph.py`](./verification/showGraph.py) 显示欧氏距离图像
 
@@ -77,7 +77,7 @@ python 实在是太慢了，算到虎年都算不完👴 也许因为我的 GPU 
 
 只是因为懒得换 IDE
 
-
+##### [`./classification/judge.py`](./classification/judge.py) 调用摄像头判断性别
 
 
 

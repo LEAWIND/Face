@@ -4,25 +4,21 @@ if pth[-1].lower() == 'face':
 	os.chdir('classification')
 import torch
 
-ftFolder = '../data/imgFeature'
-ftList = os.listdir(ftFolder)
-# 把文件里的特征数据读到内存里，这样应该更快
-fts = []
-for f in ftList:
-	fi = open(f"{ftFolder}/{f}", mode='r')
-	f = fi.read().split(',')
-	fi.close()
-	f = list(map(float, f))
-	f = torch.tensor(f)
-	f = torch.cat([f, torch.tensor([1])])
-	fts.append(f)
-fts = fts[::2]	# 对每个人取 1 张图片就够了
+test_m_folder = "../data/test_m_ft"
+test_f_folder = "../data/test_f_ft"
 
-test_m = fts[150:250]	# 测试用的男性样本
-test_f = fts[400:]	# 测试用的女性样本
-
-test_m = fts[:250]
-test_f = fts[250:]
+def getfts(folderPath):
+	ftList = os.listdir(folderPath)
+	fts = []
+	for f in ftList:
+		fi = open(f"{folderPath}/{f}", mode='r')
+		f = fi.read().split(' ')
+		fi.close()
+		f = list(map(float, f))
+		f = torch.tensor(f)
+		f = torch.cat([f, torch.tensor([1])])
+		fts.append(f)
+	return fts
 
 def calcAccuracy(prm):
 	er = 0
@@ -31,7 +27,9 @@ def calcAccuracy(prm):
 	avg_m = 0
 	avg_f = 0
 
+	i = 0
 	for s in test_m:
+		i += 1
 		tp = torch.sum(prm*s)
 		tp = 1 / (1 + 2.718281828459045 ** (-tp))
 		# print('tp =', tp)
@@ -41,6 +39,7 @@ def calcAccuracy(prm):
 			co_m += 1
 		else:
 			er += 1
+			# print(i)
 	
 	for s in test_f:
 		tp = torch.sum(prm*s)
@@ -54,11 +53,15 @@ def calcAccuracy(prm):
 	print(f"总准确率:{co}/{co+er} = {co/(co+er)}")
 	print(f"男性:	{co_m}/{len(test_m)} = {co_m/len(test_m)}")
 	print(f"女性:	{co-co_m}/{len(test_m)} = {(co-co_m)/len(test_m)}")
-	print(f"男性均值:{avg_m/len(test_m)}\n女性均值:{avg_f/len(test_m)}")
+	print(f"男性均值:{avg_m/len(test_m)}	= 1 - {1-avg_m/len(test_m)}")
+	print(f"女性均值:{avg_f/len(test_m)}	= 1 - {1-avg_f/len(test_m)}")
 	return co / (co + er), co, er
 
 
 if __name__ == '__main__':
+	test_m = getfts(test_m_folder)
+	test_f = getfts(test_f_folder)
+
 	file = open('target.txt', mode='r')
 	prm = file.read().strip().split(' ')
 	prm = torch.tensor(list(map(float, prm)))

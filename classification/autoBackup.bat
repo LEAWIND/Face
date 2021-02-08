@@ -1,4 +1,4 @@
 :autoBackup
 backup.py
-timeout /T 30
+timeout /T 60
 goto autoBackup
