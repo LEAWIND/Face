@@ -1,4 +1,5 @@
-# 看看各个参数随时间的变化情况
+# 各个参数随时间的变化图像
+
 import os,re
 pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
@@ -8,13 +9,13 @@ import matplotlib.pyplot as plt
 
 # 参数们的下标:
 prms = [3,59,86,134,167,230,237,241,254,255,263,295,299,309,315,318,322,328,330,333,339,343,367,387,400,403,408,412,413,425,436,466,470,489,499,512]	# 要显示的参数下标(0-512)
-
+# prms = range(0,513)
 cs = "brgm"	# 颜色
 ms = "."	# ^o*>v<|
 
 folder = "backup"
 
-fileList0 = os.listdir(folder)[::]
+fileList0 = os.listdir(folder)[-1000::1]
 fileList = []
 for i in fileList0:
 	if i[-4:] == '.txt':
@@ -34,12 +35,6 @@ while i < len(zps[0]):
 	for j in zps:
 		f[i].append(j[i])
 	i += 1
-# for i in range(len(f)-1):
-# 	f[i] = f[i][::]
-# 	for j in range(len(f[i])):
-# 		temp = f[i][j]
-# 		temp = temp-f[i][j-1]
-# 		f[i][j] = temp
 
 for pi in range(len(prms)):
 	i = prms[pi]
@@ -48,4 +43,4 @@ for pi in range(len(prms)):
 	plt.ylabel(str(i),fontsize = 8)
 	print(i)
 	plt.scatter(x, y, c=cs[pi%len(cs)], s=0.5, alpha=0.8, marker=ms[pi%len(ms)])
-	plt.show()
+plt.show()

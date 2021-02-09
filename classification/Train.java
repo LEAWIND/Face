@@ -1,3 +1,4 @@
+// 性别分类训练
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -8,8 +9,8 @@ import java.io.BufferedWriter;
 import java.util.Arrays;
 
 public class Train {
-	final String train_m_folder = "../data/train_m_ft";
-	final String train_f_folder = "../data/train_f_ft";
+	final static String train_m_folder = "../data/train_m_ft";
+	final static String train_f_folder = "../data/train_f_ft";
 
 	public static double lossOf (double[] prm) {	// 损失函数
 		double ls = 0;
@@ -20,7 +21,7 @@ public class Train {
 			for (int j=0;j<prm.length;j++) {
 				tp += prm[j] * train_m[i][j];
 			}
-			ls += 1 - 1.0d / (1.0d + Math.exp(- tp));
+			ls += (1 - 1.0d / (1.0d + Math.exp(- tp)));
 		}
 		for (int i=0;i<train_f.length;i++) {
 			tp = 0;
@@ -106,17 +107,17 @@ public class Train {
 	public static double[] prm;
 	public static void main (String[] args) {
 		// train_m = Arrays.copyOfRange(fts, 50, 220);
-		train_f = getfts("../data/train_f_ft");
-		train_m = getfts("../data/train_m_ft");
+		train_f = getfts(train_f_folder);
+		train_m = getfts(train_m_folder);
 
-		train_m = Arrays.copyOfRange(train_m, 100, 500);
-		train_f = Arrays.copyOfRange(train_f, 0, 400);
+		train_m = Arrays.copyOfRange(train_m, 102, 500);
+		train_f = Arrays.copyOfRange(train_f, 102, 400);
 
 		prm = readPrm();
 		int n = 5000000;
 		// n = 10;
 		while (n-- > 0) {
-			move(0.02);
+			move(0.03);
 			if (n%20 == 0){
 				System.out.println(n);
 				savePrm(prm);

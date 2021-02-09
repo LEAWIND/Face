@@ -38,7 +38,7 @@ if __name__ == "__main__":
 			for imN in ims:
 				imf = fd +'/'+ imN
 				imf_ft = fd_ft +'/'+ imN + '.txt'
-				if os.path.isfile(imf) and (imf[-3:] in imageFormats) and not os.path.isfile(imf_ft):
+				if os.path.isfile(imf) and (imf[-3:].lower() in imageFormats) and not os.path.isfile(imf_ft):
 					print(imf_ft)
 					im = Image.open(imf)
 					ft = ' '.join(map(str, map(float, p.getfeature(im))))

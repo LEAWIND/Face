@@ -1,3 +1,4 @@
+# 性别分类训练
 import os, re, math, time
 pth = os.getcwd().split('\\')
 if pth[-1].lower() == 'face':
@@ -13,15 +14,11 @@ train_f_folder = "../data/train_f_ft"
 
 def lossOf(prm):	# 损失函数
 	ls = 0
-
-
 	for s in train_m:
 		tp = torch.sum(prm*s)
-
 		tp = 1 - 1 / (1 + 2.718281828459045 ** (-tp))
 
 		ls += tp
-
 	for s in train_f:
 		tp = torch.sum(prm*s)
 
@@ -47,7 +44,9 @@ def move(step=0.0001):
 
 
 	return
+
 def readPrm():
+	global prm
 
 	file = open('target.txt', mode='r')
 
@@ -56,8 +55,6 @@ def readPrm():
 	prm = torch.tensor(list(map(float, prm)))
 
 	file.close()
-
-
 
 
 
@@ -98,29 +95,27 @@ def getfts(folderPath):
 
 	return fts
 
+
+
+
+
+
 prm = []
-
-
-
-
-
 if __name__ == '__main__':
 
 	train_f = getfts(train_f_folder)
 	train_m = getfts(train_m_folder)
 
-	train_m = train_m[100:500]
-	train_f = train_f[0:400]
-
+	train_m = train_m[350:400]
+	train_f = train_f[250:300]
 	prm = readPrm()
-	n = 10000
+	n = 1
 	# n = 2
 	while n>0:
-		move(0.01)
+		move(0.02)
 		if n % 20 == 0:
 			print(n)
-			savePrm(prm)
-
+			# savePrm(prm)
 		n -= 1
-	savePrm(prm)
+	# savePrm(prm)
 
