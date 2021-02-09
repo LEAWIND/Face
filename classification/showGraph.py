@@ -45,8 +45,8 @@ for ft in fts_f:
 	prepre_f.append(tp)
 	pre_f.append(1 / (1 + 2.718281828459045 ** (-tp)))
 
-plt.scatter(prepre_m, pre_f, s=20, c="b", alpha=0.2, marker='v')
-plt.scatter(prepre_f, pre_m, s=20, c="r", alpha=0.2, marker='^')
+# plt.scatter(prepre_m, pre_f, s=20, c="b", alpha=0.2, marker='v')
+# plt.scatter(prepre_f, pre_m, s=20, c="r", alpha=0.2, marker='^')
 # pre_f = list(map(lambda x: max(pre_m)-x, pre_f))
 plt.scatter(prepre_m, pre_m, s=20, c="b", alpha=0.3, marker='v')
 plt.scatter(prepre_f, pre_f, s=20, c="r", alpha=0.3, marker='^')

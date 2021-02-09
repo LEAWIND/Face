@@ -21,14 +21,16 @@ public class Train {
 			for (int j=0;j<prm.length;j++) {
 				tp += prm[j] * train_m[i][j];
 			}
-			ls += (1 - 1.0d / (1.0d + Math.exp(- tp)));
+			ls += (1 - 1.0d / (1.0d + Math.exp(-tp)));
+			// ls += Math.exp(-tp*0.5);
 		}
 		for (int i=0;i<train_f.length;i++) {
 			tp = 0;
 			for (int j=0;j<prm.length;j++) {
 				tp += prm[j] * train_f[i][j];
 			}
-			ls += 1.0d / (1.0d + Math.exp(- tp));
+			ls += 1.0d / (1.0d + Math.exp(-tp));
+			// ls += Math.exp(tp*0.5);
 		}	
 		return ls / train_m.length;
 	}
@@ -111,7 +113,7 @@ public class Train {
 		train_m = getfts(train_m_folder);
 
 		train_m = Arrays.copyOfRange(train_m, 102, 500);
-		train_f = Arrays.copyOfRange(train_f, 102, 400);
+		train_f = Arrays.copyOfRange(train_f, 2, 400);
 
 		prm = readPrm();
 		int n = 5000000;
