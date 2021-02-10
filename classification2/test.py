@@ -4,8 +4,8 @@ if pth[-1].lower() == 'face':
 	os.chdir('classification2')
 import torch
 
-test_m_folder = "../data/test_m_ft"
-test_f_folder = "../data/test_f_ft"
+test_m_folder = "../data/train_m_ft"
+test_f_folder = "../data/train_f_ft"
 test_m_list = os.listdir(test_m_folder)
 test_f_list = os.listdir(test_f_folder)
 
@@ -32,8 +32,9 @@ def calcAccuracy(prm):
 	i = 0
 	for s in test_m:
 		tp = torch.sum(prm*s)
+		tp = 1 / (1 + math.exp(-tp))
 		avg_m += tp
-		if tp > 0:
+		if tp > 0.5:
 			co += 1
 			co_m += 1
 		else:
@@ -44,21 +45,25 @@ def calcAccuracy(prm):
 	i = 0
 	for s in test_f:
 		tp = torch.sum(prm*s)
+		tp = 1 / (1 + math.exp(-tp))
 		avg_f += tp
-		if tp < 0:
+		if tp < 0.5:
 			co += 1
 		else:
 			# print(test_f_list[i], tp)
 			er += 1
 		i += 1
 
+	avg_m /= len(test_m)
+	avg_f /= len(test_f)
+
 	print(f"总准确率:{co}/{co+er} = {co/(co+er)}")
 	print(f"男性:	{co_m}/{len(test_m)} = {co_m/len(test_m)}")
 	print(f"女性:	{co-co_m}/{len(test_f)} = {(co-co_m)/len(test_f)}")
-	print(f"男性均值: {avg_m/len(test_m)}")
-	print(f"女性均值:{avg_f/len(test_m)}")
-	# print(f"男性均值:{avg_m/len(test_m)}	= 1 - {1-avg_m/len(test_m)}")
-	# print(f"女性均值:{avg_f/len(test_m)}	= 1 - {1-avg_f/len(test_m)}")
+	# print(f"男性平均预测值: {avg_m")
+	# print(f"女性平均预测值:{avg_f}")
+	print(f"男性平均预测值:{avg_m}	= 1 - {1-avg_m}")
+	print(f"女性平均预测值:{avg_f}	= 1 - {1-avg_f}")
 	return co / (co + er), co, er
 
 

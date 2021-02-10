@@ -15,7 +15,7 @@ ms = "."	# ^o*>v<|
 
 folder = "backup"
 
-fileList0 = os.listdir(folder)[-200::1]
+fileList0 = os.listdir(folder)[0::4]
 fileList = []
 for i in fileList0:
 	if i[-4:] == '.txt':

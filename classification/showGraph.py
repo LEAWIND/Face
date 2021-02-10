@@ -6,10 +6,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 
-train_m_folder = "../data/test_m_ft"
-train_f_folder = "../data/test_f_ft"
+s = ''
+while s == '':
+	i = input("你想看训练集(0)还是测试集(1)？")
+	s = "test" if i=='1' else "train" if i=='0' else ''
+train_m_folder = f"../data/{s}_m_ft"
+train_f_folder = f"../data/{s}_f_ft"
 
-	
 def getfts(folderPath):
 	ftList = os.listdir(folderPath)
 	fts = []
@@ -45,9 +48,13 @@ for ft in fts_f:
 	prepre_f.append(tp)
 	pre_f.append(1 / (1 + 2.718281828459045 ** (-tp)))
 
-# plt.scatter(prepre_m, pre_f, s=20, c="b", alpha=0.2, marker='v')
-# plt.scatter(prepre_f, pre_m, s=20, c="r", alpha=0.2, marker='^')
-# pre_f = list(map(lambda x: max(pre_m)-x, pre_f))
-plt.scatter(prepre_m, pre_m, s=20, c="b", alpha=0.3, marker='v')
-plt.scatter(prepre_f, pre_f, s=20, c="r", alpha=0.3, marker='^')
+leng = min(len(pre_f), len(pre_m))
+pre_m = pre_m[:leng]
+pre_f = pre_f[:leng]
+
+plt.scatter(pre_m, pre_f, s=20, c="b", alpha=0.5, marker='o')
+plt.scatter(pre_f, pre_m, s=20, c="r", alpha=0.5, marker='o')
+
+plt.scatter(pre_m, pre_m, s=20, c="b", alpha=0.3, marker='v')
+plt.scatter(pre_f, pre_f, s=20, c="r", alpha=0.3, marker='^')
 plt.show()

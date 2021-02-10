@@ -54,12 +54,15 @@ def calcAccuracy(prm):
 			# print(test_f_list[i], tp)
 			er += 1
 		i += 1
+	
+	avg_m /= len(test_m)
+	avg_f /= len(test_f)
 
 	print(f"总准确率:{co}/{co+er} = {co/(co+er)}")
 	print(f"男性:	{co_m}/{len(test_m)} = {co_m/len(test_m)}")
 	print(f"女性:	{co-co_m}/{len(test_f)} = {(co-co_m)/len(test_f)}")
-	print(f"男性均值:{avg_m/len(test_m)}	= 1 - {1-avg_m/len(test_m)}")
-	print(f"女性均值:{avg_f/len(test_m)}	= 1 - {1-avg_f/len(test_m)}")
+	print(f"男性平均预测值:{avg_m}	= 1 - {1-avg_m}")
+	print(f"女性平均预测值:{avg_f}	= 1 - {1-avg_f}")
 	return co / (co + er), co, er
 
 
