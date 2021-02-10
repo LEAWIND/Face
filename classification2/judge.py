@@ -52,9 +52,9 @@ while 1:
 	ft = torch.cat([ft**2, ft, torch.tensor([1])])
 
 	preV = torch.sum(prm * ft)
-	# V = 1 / (1 + 2.718281828459045 ** (-preV))
 	V = float(preV)
-	if V > 0:
+	V = 1 / (1 + 2.718281828459045 ** (-V))
+	if V > 0.5:
 		print(f"男 {V}")
 	# elif -1 < V < 1:
 	# 	print(f"中 {V}")

@@ -118,14 +118,14 @@ public class Train {
 		train_f = getfts(train_f_folder);
 		train_m = getfts(train_m_folder);
 
-		train_m = Arrays.copyOfRange(train_m, 202, 400);
-		train_f = Arrays.copyOfRange(train_f, 102, 300);
+		train_m = Arrays.copyOfRange(train_	m, 202, 400);
+		train_f = Arrays.copyOfRange(train_f, 90, 238);
 
 		prm = readPrm();
 		int n = 5000000;
 		// n = 1;
 		while (n-- > 0) {
-			move(0.1);
+			move(0.11);
 			if (n%20 == 0){
 				System.out.println(n);
 				savePrm(prm);

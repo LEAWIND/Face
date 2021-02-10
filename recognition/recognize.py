@@ -55,7 +55,7 @@ while 1:
 		file.close()
 		ft1 = torch.tensor(list(map(float, ft1))).to(p.device)
 		dist = torch.sqrt(torch.sum((ft1-ft)**2))
-		if(dist > 1.00):
+		if(dist > 1.10):
 			continue
 		else:
 			mb.append([accName, dist])

@@ -9,7 +9,7 @@
 
 ## 写了乱七八糟的好多东西，在这理一理每个文件的作用:
 
-##### [`./writeFeature.py`](./verification/writeFeature.py) 节省时间
+##### [`./writeFeature.py`](./writeFeature.py) 节省时间
 
 把每张图片的特征算出来后直接保存到一些 .txt 文件里。
 
@@ -29,11 +29,13 @@
 
 先说一下判断性别的原理：
 
-先获取图像特征(长度为 512 的向量)，然后在特征后边加一个 1， 向量长度变成 513，记为 **a**
+#### 算法 1 [文件夹在此](./classification)
+
+先获取图像特征(长度为 512 的向量)，然后在后边加一个 1， 向量长度变成 513，记为 **a**
 
 文件 [`target.txt`](classification/target.txt)  里有 513 个训练好的参数，这些参数组成一个向量，记为 **b**
 
-计算 sigmoid(sum(**a** 点乘 **b**) ) 的值
+计算 $sigmoid(sum(\pmb{a} · \pmb{b}) )$ 的值
 
 如果大于 0.5，判断为男性
 
@@ -51,13 +53,11 @@ python 实在是太慢了，算到虎年都算不完👴 也许因为我的 GPU 
 
 * ##### [`./classification/test.py`](./classification/test.py) 测试
 
-用 `target.txt` 文件中参数做测试，计算这堆参数的准确率（这是用来给人看的，不是训练时用的损失函数）
-
-测试集是我另外找的。
+用 `target.txt` 文件中的参数做测试，计算这堆参数在测试集的准确率。
 
 * ##### [./classification/showGraph.py](./classification/showGraph.py) 显示图像
 
-画出 训练集 或 测试集 中图片的性别预测值的图像
+画出测试集中图片的性别预测值的分布图像
 
 * ##### [`backup.py`](classification/backup.py), [`autoBackup.bat`](classification/autoBackup.bat) 备份`target.txt`文件
 
@@ -67,21 +67,33 @@ python 实在是太慢了，算到虎年都算不完👴 也许因为我的 GPU 
 
 * ##### [`./classification/prmChanging.py`](./classification/prmChanging.py) 参数变化趋势
 
-根据 backup 中的数据绘制各参数的值随时间的变化的图像
+根据 backup 中的数据绘制各参数的值随时间的变化的图像`
 
-有这些参数的变化趋势是比较明显的曲线:
-
-`3,6,19,27,59,86,127,134,140,167,182,230,237,241,250,254,255,257,263,293,295,299,309,315,318,322,328,330,333,339,343,367,387,400,403,408,412,413,425,436,444,449,466,470,489,499,512`
-
-备份了一千多次的时候我通过图像发现，很多参数的变化趋势近似抛物线，或者近似双勾函数，那些近似直线的可能是曲线的一部分。
+通过图像可以发现，很多参数的变化趋势近似抛物线或者双勾函数
 
 * ##### [`compile and run.bat`](classification/compile and run.bat) 编译并运行`train.java`
 
 只是因为懒得换 IDE
 
-##### [`./classification/judge.py`](./classification/judge.py) 调用摄像头判断性别
+* ##### [`./classification/judge.py`](./classification/judge.py) 调用摄像头实时判断性别
 
 
+
+#### 算法 2 [文件夹在此](./classification)
+
+先获得特征：$ p = [x_1, x_2, ..., x_{513}] $
+
+然后将 p 化成 ：$a = [p · p, p, 1] = [x_1^2, x_2^2, ..., x_{513}^2, x_1, x_2, ..., x_{513}, 1]$
+
+此时 **a** 的长度是1025，target.txt 中的向量 **b**长度也是 1025
+
+计算 $sigmoid(sum(\pmb{a} · \pmb{b}) )$ 的值
+
+如果大于 0.5，判断为男性
+
+如果小于 0.5，判断为女性
+
+然后文件夹里的各个文件作用和 算法1 的相同。
 
 
 
