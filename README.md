@@ -1,13 +1,24 @@
-<h1 style="white-space:pre;text-align:center;margin:1em;">   rén  gōng  zhì  zhàng<br/>人      工      智      能</h1>
+***
+> <h1 color="red">不要学我！</h1>
+> 
+> * 正式建立你的第一个Github项目前，建议先阅读[Github 文档](https://docs.github.com/zh/get-started/start-your-journey/about-github-and-git)
+> * 不要在一个提交中包含 [1378 个修改](https://github.com/LEAWIND/Face/commit/33a1f92b634ef4d810e2c8eb15f717610b44c00f)
+> * 提交最好遵循 [Conventional Commits](https://www.conventionalcommits.org/zh-hans/v1.0.0/) 规范，不要写一堆[诡异的随机字符](https://github.com/LEAWIND/Face/commits/main/)。
+> * 最好不要直接把数据集放在代码仓库里，如果需要分享数据集，可以上传到 [kaggle](https://www.kaggle.com) 上。
+> * 注意代码风格保持统一，可以使用 [EditorConfig](https://editorconfig.org/) 来规范代码格式。
+> * 最好使用 .gitattribute 来规范行分隔符，参考[模板](https://github.com/gitattributes/gitattributes)
+> * 注意在 [.gitignore](https://docs.github.com/zh/get-started/getting-started-with-git/ignoring-files) 中忽略不必要的文件和目录，例如 `.vscode`, `.idea`
+> * README 应当简洁明了，发布在github上的README最好[支持中英双语](https://github.com/LEAWIND/Third-Person/blob/1.20.1/README-ZH.md)。
+> * 最好附上[开源协议](https://www.runoob.com/w3cnote/open-source-license.html)
+***
 
-```python
-""" 先看看作业是啥 """
-#用feature tensor来计算欧式距离(可以用tensor，也可以转numpy)
-#画1000个不同人特征的欧式距离的点和1000个相同人图片的特征的欧式距离
-#附加题 用获取的feature 和 label来做分类（参考上一次的逻辑回归）
-```
+任务
 
-## 写了乱七八糟的好多东西，在这理一理每个文件的作用:
+* 用feature tensor来计算欧式距离(可以用tensor，也可以转numpy)
+* 画1000个不同人特征的欧式距离的点和1000个相同人图片的特征的欧式距离
+* 附加题 用获取的feature 和 label来做分类（参考上一次的逻辑回归）
+
+## 每个文件的作用
 
 ##### [`./writeFeature.py`](./writeFeature.py) 节省时间
 
@@ -19,7 +30,7 @@
 
 * ##### [`./showGraph.py`](./showGraph.py) 显示欧氏距离图像
 
-就是用 matplotlib 把图像画出来嘛
+就是用 matplotlib 把图像画出来
 
 顺便计算 "用来区分是否为同一人" 的阈值，如果欧氏距离大于这个阈值就可以认为不是同一人。
 
